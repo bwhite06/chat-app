@@ -19,7 +19,7 @@ server.get('/',(req,res)=>{
   res.send('active')
 
 });
-// Get ALL
+// ===Get aLL users in db===
 server.get('/api/users',(req,res)=>{
   db('users')
   .then(users=>{
@@ -29,7 +29,7 @@ server.get('/api/users',(req,res)=>{
     res.send(err);
   })
 });
-
+//===Login===
 server.post('/api/login',(req, res) => {
 
   const credentials = req.body;
@@ -51,7 +51,7 @@ server.post('/api/login',(req, res) => {
   });
 
 });
-
+// ===Register===
 server.post('/api/register',(req,res)=>{
 const {username,password,email} = req.body;
 const role = 'ordinary';
@@ -71,7 +71,7 @@ newUser.password  = hash;
   })
 })
 
-// Send message
+// ===Send message===
 server.post('/api/message',authenticate,(req,res)=>{
 const {reply,ip} = req.body;
 const user_one = req.decoded.user_id;
@@ -91,15 +91,15 @@ db.transaction(trx => {
      return trx('conversation_reply').insert(message).then(ids=>{
          const id =ids[0];
      }).catch(err=>{
-       res.status(500).json(err)
+       res.status(500).json(err);
      })
     });
 })
 .then(() => {
-  console.log('inserted 2 rows');
+  console.log('inserted');
 })
 .catch(err => {
-  console.log('one of the queries failed, no rows were inserted and transaction was rolled back',err)
+  console.log('rolled back',err)
 });
 });
 
