@@ -6,7 +6,7 @@ const knexConfig = require('./knexfile.js')
 const db = knex(knexConfig.development)
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken' );
 const jwtKey = require('./_secrets/keys.js').jwtKey;
 const { authenticate } = require('./middleware.js');
 
@@ -73,9 +73,8 @@ newUser.password  = hash;
 
 // ===Send message===
 server.post('/api/message',authenticate,(req,res)=>{
-const {reply,ip} = req.body;
+const {reply,ip,user_two} = req.body;
 const user_one = req.decoded.user_id;
-const user_two = 2;
 const users = {user_one, user_two,ip};
 const user_id_fk = user_one;
 
